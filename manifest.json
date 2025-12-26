@@ -14,9 +14,7 @@
     "activeTab",
     "webNavigation"
   ],
-  "host_permissions": [
-    "<all_urls>"
-  ],
+  "host_permissions": ["<all_urls>"],
   "background": {
     "service_worker": "background.js"
   },
@@ -47,12 +45,17 @@
         "id": "adblock_rules",
         "enabled": false,
         "path": "rules/adblock.json"
+      },
+      {
+        "id": "focus_rules",
+        "enabled": false,
+        "path": "rules/focus.json"
       }
     ]
   },
   "web_accessible_resources": [
     {
-      "resources": ["content.css"],
+      "resources": ["content.css", "pages/*"],
       "matches": ["<all_urls>"]
     }
   ],

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StayFocused - Options</title>
+  <style>
+    :root {
+      --primary-color: #4a6da7;
+      --primary-dark: #344e7a;
+      --primary-light: #6b8ac0;
+      --success-color: #2ecc71;
+      --danger-color: #e74c3c;
+      --background: #f5f7fa;
+      --card-background: #ffffff;
+      --text-color: #333;
+      --border-color: #ddd;
+      --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      --border-radius: 6px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--background);
+      color: var(--text-color);
+      line-height: 1.6;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    h1 {
+      color: var(--primary-dark);
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      color: var(--primary-dark);
+      margin: 20px 0 15px 0;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .card {
+      background-color: var(--card-background);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .option-group {
+      margin-bottom: 30px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="time"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    input[type="checkbox"] {
+      margin-right: 8px;
+    }
+
+    button {
+      padding: 10px 15px;
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: var(--primary-dark);
+    }
+
+    button.danger {
+      background-color: var(--danger-color);
+    }
+
+    button.danger:hover {
+      background-color: #c0392b;
+    }
+
+    .button-group {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+
+    .button-row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .settings-section {
+      margin-bottom: 40px;
+    }
+
+    .bulk-textarea {
+      height: 150px;
+      font-family: monospace;
+      white-space: nowrap;
+    }
+
+    .success-message {
+      color: var(--success-color);
+      margin-top: 10px;
+      font-weight: 500;
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+
+    .success-message.visible {
+      opacity: 1;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border-color);
+      color: #666;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>StayFocused Options</h1>
+      <p>Configure advanced settings to customize your focus experience</p>
+    </header>
+
+    <div id="save-status" class="success-message">Settings saved successfully!</div>
+
+    <section class="settings-section card">
+      <h2>Default Focus Settings</h2>
+      <p>Set your preferred defaults for when you start focus mode</p>
+
+      <div class="option-group">
+        <div class="form-group">
+          <label for="default-block-mode">Default Blocking Mode:</label>
+          <select id="default-block-mode">
+            <option value="timed">For a fixed time</option>
+            <option value="untilTime">Until a specific time</option>
+            <option value="indefinite">Indefinitely</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="default-duration">Default Duration (minutes):</label>
+          <input type="number" id="default-duration" min="1" value="60">
+        </div>
+      </div>
+    </section>
+
+    <section class="settings-section card">
+      <h2>Site Management</h2>
+
+      <div class="option-group">
+        <h3>Bulk Edit Blocked Sites</h3>
+        <p>One domain per line (e.g., facebook.com)</p>
+        <textarea id="bulk-blacklist" class="bulk-textarea"></textarea>
+
+        <h3>Bulk Edit Allowed Sites</h3>
+        <p>One domain per line (e.g., google.com)</p>
+        <textarea id="bulk-whitelist" class="bulk-textarea"></textarea>
+      </div>
+    </section>
+
+    <section class="settings-section card">
+      <h2></h2>Notification Settings</h2>
+
+      <div class="option-group">
+        <div class="form-group">
+          <label>
+            <input type="checkbox" id="notify-end" checked>
+            Show notification when focus period ends
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label>
+            <input type="checkbox" id="notify-attempt" checked>
+            Show notification when attempt to visit blocked site
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label>
+            <input type="checkbox" id="sound-enabled">
+            Play sound notifications
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <section class="settings-section card">
+      <h2>Schedule</h2>
+      <p>Set recurring focus sessions</p>
+
+      <div class="option-group">
+        <div class="form-group">
+          <label>
+            <input type="checkbox" id="schedule-enabled">
+            Enable scheduled focus sessions
+          </label>
+        </div>
+
+        <div id="schedule-options">
+          <div class="form-group">
+            <label for="schedule-days">Days:</label>
+            <div></div>
+              <label></label><input type="checkbox" name="schedule-day" value="1"> Monday</label>
+              <label><input type="checkbox" name="schedule-day" value="2"> Tuesday</label>
+              <label><input type="checkbox" name="schedule-day" value="3"> Wednesday</label>
+              <label><input type="checkbox" name="schedule-day" value="4"> Thursday</label>
+              <label><input type="checkbox" name="schedule-day" value="5"> Friday</label>
+              <label><input type="checkbox" name="schedule-day" value="6"> Saturday</label>
+              <label><input type="checkbox" name="schedule-day" value="0"> Sunday</label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="schedule-start">Start time:</label>
+            <input type="time" id="schedule-start" value="09:00">
+          </div>
+
+          <div class="form-group">
+            <label for="schedule-end">End time:</label>
+            <input type="time" id="schedule-end" value="17:00">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="settings-section card">
+      <h2>Data Management</h2>
+
+      <div class="button-group">
+        <div></div>
+          <button id="export-data">Export Settings</button>
+          <button id="import-data">Import Settings</button>
+          <input type="file" id="import-file" style="display: none;">
+        </div>
+
+        <button id="reset-data" class="danger">Reset All Settings</button>
+      </div>
+    </section>
+
+    <div class="button-group">
+      <button id="save-options">Save All Settings</button>
+    </div>
+
+    <footer>
+      <p>StayFocused v1.0.0 | <a href="https://github.com/yourusername/stayfocused" target="_blank">GitHub</a></p>
+    </footer>
+  </div>
+
+  <script src="../js/options.js"></script>
+</body>
+</html>

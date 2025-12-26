@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS Service Recommender</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AWS Service Recommender</h1>
+            <div class="theme-toggle">
+                <input type="checkbox" id="darkMode" class="toggle-checkbox">
+                <label for="darkMode" class="toggle-label">
+                    <span class="toggle-inner"></span>
+                    <span class="toggle-switch"></span>
+                </label>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <form id="recommendationForm">
+                <div class="form-group">
+                    <label for="workloadType">Workload Type</label>
+                    <select id="workloadType" required>
+                        <option value="" disabled selected>Select workload type</option>
+                        <option value="webApp">Web Application</option>
+                        <option value="api">API Service</option>
+                        <option value="ml">Machine Learning</option>
+                        <option value="data">Data Processing</option>
+                        <option value="serverless">Serverless Functions</option>
+                        <option value="storage">Storage Solution</option>
+                        <option value="streaming">Streaming Data</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="scale">Scale</label>
+                    <select id="scale" required>
+                        <option value="" disabled selected>Select scale</option>
+                        <option value="small">Small (1-100 users)</option>
+                        <option value="medium">Medium (100-1000 users)</option>
+                        <option value="large">Large (1000-10000 users)</option>
+                        <option value="enterprise">Enterprise (10000+ users)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="budget">Budget</label>
+                    <select id="budget" required>
+                        <option value="" disabled selected>Select budget range</option>
+                        <option value="veryLow">Very Low ($1-100/month)</option>
+                        <option value="low">Low ($100-500/month)</option>
+                        <option value="medium">Medium ($500-2000/month)</option>
+                        <option value="high">High ($2000+/month)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="trafficPattern">Traffic Pattern</label>
+                    <select id="trafficPattern" required>
+                        <option value="" disabled selected>Select traffic pattern</option>
+                        <option value="predictable">Predictable (Consistent)</option>
+                        <option value="variable">Variable (Day/Night cycles)</option>
+                        <option value="spiky">Spiky (Unpredictable bursts)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="customization">Customization Level</label>
+                    <select id="customization" required>
+                        <option value="" disabled selected>Select customization level</option>
+                        <option value="low">Low (Standard configurations)</option>
+                        <option value="medium">Medium (Some customizations)</option>
+                        <option value="high">High (Heavily customized)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="performance">Performance Requirement</label>
+                    <select id="performance" required>
+                        <option value="" disabled selected>Select performance level</option>
+                        <option value="standard">Standard (< 1s response)</option>
+                        <option value="high">High Performance (< 500ms)</option>
+                        <option value="lowLatency">Low Latency (< 100ms)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="opsPreference">Operations Preference</label>
+                    <select id="opsPreference" required>
+                        <option value="" disabled selected>Select operations preference</option>
+                        <option value="fullyManaged">Fully Managed (No infrastructure management)</option>
+                        <option value="partial">Partial Control (Some management required)</option>
+                        <option value="fullControl">Full Control (Custom infrastructure)</option>
+                    </select>
+                </div>
+
+                <button type="submit" id="recommendButton">Get Recommendations</button>
+            </form>
+
+            <div id="results" class="hidden">
+                <h2>Recommended AWS Services</h2>
+                <div id="recommendations"></div>
+                <div class="action-buttons">
+                    <button id="exportButton">Export as JSON</button>
+                    <button id="newRecommendation">New Recommendation</button>
+                </div>
+            </div>
+
+            <div id="loading" class="hidden">
+                <div class="spinner"></div>
+                <p>Analyzing your requirements...</p>
+            </div>
+        </div>
+
+        <footer>
+            <p>AWS Service Recommender &copy; 2023</p>
+        </footer>
+    </div>
+
+    <script src="utils.js"></script>
+    <script src="recommendationEngine.js"></script>
+    <script src="popup.js"></script>
+</body>
+</html>

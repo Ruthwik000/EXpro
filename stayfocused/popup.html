@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StayFocused</title>
+  <link rel="stylesheet" href="css/popup.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>StayFocused</h1>
+      <div class="focus-status">
+        <span id="status-indicator"></span>
+        <span id="status-text">Focus mode: <span id="focus-state">OFF</span></span>
+      </div>
+    </header>
+
+    <section class="timer-section" id="timer-display">
+      <div id="remaining-time-container">
+        <h3>Remaining time:</h3>
+        <div id="remaining-time">--:--:--</div>
+        <button id="stop-focus" class="btn danger">Stop Focus Mode</button>
+      </div>
+    </section>
+
+    <section id="focus-controls">
+      <h2>Focus Settings</h2>
+
+      <div class="form-group">
+        <label for="block-type">Block Duration:</label>
+        <select id="block-type" class="form-control">
+          <option value="timed">For a fixed time</option>
+          <option value="untilTime">Until a specific time</option>
+          <option value="indefinite">Indefinitely</option>
+        </select>
+      </div>
+
+      <div id="fixed-time-options" class="duration-option">
+        <div class="form-group">
+          <label for="duration-hours">Hours:</label>
+          <input type="number" id="duration-hours" class="form-control" min="0" max="23" value="1">
+        </div>
+        <div class="form-group">
+          <label for="duration-minutes">Minutes:</label>
+          <input type="number" id="duration-minutes" class="form-control" min="0" max="59" value="0">
+        </div>
+      </div>
+
+      <div id="until-time-options" class="duration-option">
+        <div class="form-group">
+          <label for="end-time">End time:</label>
+          <input type="time" id="end-time" class="form-control">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="start-now">
+          <input type="checkbox" id="start-now" checked>
+          Start blocking now
+        </label>
+      </div>
+
+      <div id="delayed-start-options" class="duration-option">
+        <div class="form-group">
+          <label for="start-time">Start time:</label>
+          <input type="time" id="start-time" class="form-control">
+        </div>
+      </div>
+
+      <button id="start-focus" class="btn primary">Start Focus Mode</button>
+    </section>
+
+    <section class="list-section">
+      <div class="list-container">
+        <h2>Blocked Sites</h2>
+        <div class="site-input-group">
+          <input type="text" id="new-blocked-site" placeholder="e.g., facebook.com" class="form-control">
+          <button id="add-blocked-site" class="btn secondary">Add</button>
+        </div>
+        <ul id="blocked-sites-list" class="sites-list"></ul>
+      </div>
+
+      <div class="list-container">
+        <h2>Always Allow</h2>
+        <div class="site-input-group">
+          <input type="text" id="new-allowed-site" placeholder="e.g., google.com" class="form-control">
+          <button id="add-allowed-site" class="btn secondary">Add</button>
+        </div>
+        <ul id="allowed-sites-list" class="sites-list"></ul>
+      </div>
+    </section>
+
+    <footer>
+      <button id="open-options" class="btn text">Advanced Settings</button>
+    </footer>
+  </div>
+
+  <script src="js/popup.js"></script>
+</body>
+</html>

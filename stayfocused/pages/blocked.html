@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Site Blocked - StayFocused</title>
+  <style>
+    :root {
+      --primary-color: #4a6da7;
+      --primary-dark: #344e7a;
+      --primary-light: #6b8ac0;
+      --background: #f5f7fa;
+      --text-color: #333;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--background);
+      color: var(--text-color);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .blocked-container {
+      max-width: 600px;
+      background-color: white;
+      border-radius: 8px;
+      padding: 40px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .logo {
+      font-size: 32px;
+      font-weight: bold;
+      color: var(--primary-color);
+      margin-bottom: 10px;
+    }
+
+    .icon {
+      font-size: 64px;
+      margin: 20px 0;
+      color: var(--primary-color);
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: var(--primary-dark);
+    }
+
+    p {
+      font-size: 18px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    #remaining-time {
+      font-size: 36px;
+      font-weight: bold;
+      color: var(--primary-color);
+      margin: 30px 0;
+    }
+
+    .actions {
+      margin-top: 40px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: var(--primary-color);
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+      font-weight: 500;
+      transition: background-color 0.3s;
+    }
+
+    .btn:hover {
+      background-color: var(--primary-dark);
+    }
+
+    .quote {
+      font-style: italic;
+      color: #666;
+      margin: 30px 0;
+      padding: 20px;
+      border-top: 1px solid #eee;
+      border-bottom: 1px solid #eee;
+    }
+
+    .indefinite-mode {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="blocked-container">
+    <div class="logo">StayFocused</div>
+    <div class="icon">🚫</div>
+    <h1>This site is blocked</h1>
+
+    <p>You're currently in focus mode. This website has been blocked to help you stay productive.</p>
+
+    <div id="timed-mode">
+      <p>Focus mode will be active for:</p>
+      <div id="remaining-time">--:--:--</div>
+    </div>
+
+    <div id="indefinite-mode" class="indefinite-mode">
+      <p>Focus mode is active indefinitely until manually disabled.</p>
+    </div>
+
+    <div class="quote">
+      <p>"The successful person is the one who does what they planned to do."</p>
+    </div>
+
+    <div class="actions">
+      <a href="javascript:history.back()" class="btn">Go Back</a>
+    </div>
+  </div>
+
+  <script>
+    // Get blocking info from background script
+    chrome.runtime.sendMessage({ action: "getBlockingInfo" }, function(response) {
+      if (!response) return;
+
+      const { endTime, blockMode } = response;
+
+      if (blockMode === 'indefinite') {
+        // Show indefinite mode message
+        document.getElementById('timed-mode').style.display = 'none';
+        document.getElementById('indefinite-mode').style.display = 'block';
+        return;
+      }
+
+      // If we have an end time, show countdown
+      if (endTime) {
+        updateRemainingTime(endTime);
+
+        // Update the countdown every second
+        setInterval(() => {
+          updateRemainingTime(endTime);
+        }, 1000);
+      }
+    });
+
+    // Update the remaining time display
+    function updateRemainingTime(endTimeString) {
+      const now = new Date();
+      const endTime = new Date(endTimeString);
+
+      // Calculate time difference
+      let diff = endTime - now;
+
+      // If time's up, show expired
+      if (diff <= 0) {
+        document.getElementById('remaining-time').textContent = 'Time expired';
+        return;
+      }
+
+      // Calculate hours, minutes, seconds
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      // Format with leading zeros
+      const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+      // Update display
+      document.getElementById('remaining-time').textContent = formattedTime;
+    }
+  </script>
+</body>
+</html>
